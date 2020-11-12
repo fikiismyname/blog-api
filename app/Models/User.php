@@ -41,6 +41,14 @@ class User extends Authenticatable implements JWTSubject {
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Relationship between User and Post.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+
 
     /** 
      * JWT
