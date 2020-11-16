@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Site\TagController;
+use App\Http\Controllers\Site\PostController;
+use App\Http\Controllers\Site\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,5 +33,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('/auth')->group(function() {
     Route::post('/login', LoginController::class);
     Route::post('/register', RegisterController::class);
-    Route::post('logout', LogoutController::class);
+    Route::post('/logout', LogoutController::class);
 });
+
+/*
+|----------------------------------------------------
+| Blog Post
+|----------------------------------------------------
+*/
+Route::get('/post/category/{category_id}', [PostController::class, 'postByCategory'])
+    ->name('post.bycategory');
+
+Route::apiResource('/post', PostController::class)
+    ->only(['index', 'show']);
+
+Route::get('/category', [CategoryController::class, 'index'])
+    ->name('category.index');
+
+Route::get('/tag', [TagController::class, 'index'])
+    ->name('tag.index');
